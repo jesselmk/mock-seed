@@ -9,13 +9,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({TimeUnit.class, SalaryCalculator.class})
+@PrepareForTest({TimeUnit.class})
+@SuppressStaticInitializationFor("com.xxx.xxx.utils.SalaryCalculator")
 public class PersonServiceTest {
     private PersonService personService;
 
@@ -29,9 +31,6 @@ public class PersonServiceTest {
         String name = "James";
         PersonRequest personRequest = new PersonRequest(name);
         PowerMockito.mockStatic(TimeUnit.class);
-//        PowerMockito.mockStatic(SalaryCalculator.class);
-//        BigDecimal value = BigDecimal.valueOf(20);
-//        PowerMockito.when(SalaryCalculator.calculate(new BigDecimal(10))).thenCallRealMethod();
         PowerMockito.doNothing().when(TimeUnit.class);
         // when
         Person  person = personService.find(personRequest);
